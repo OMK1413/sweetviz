@@ -89,7 +89,7 @@ class GraphNumeric(sweetviz.graph.Graph):
                 # TARGET: IS NUMERIC
                 # Create a series where each item indicates its bin
                 # TODO: possible 1-off bug in counts from cut in lower bin
-                source_bins_series = pd.cut(to_process.source,
+                source_bins_series = pd.qcut(to_process.source,
                                             bins=bin_limits,
                                             labels=False)
                 # Create empty bin_averages, then fill in with values
@@ -108,7 +108,7 @@ class GraphNumeric(sweetviz.graph.Graph):
                 if to_process.compare is not None and \
                         to_process.compare_target is not None:
                     # TARGET NUMERIC: with compare TARGET
-                    compare_bins_series = pd.cut(to_process.compare,
+                    compare_bins_series = pd.qcut(to_process.compare,
                                                 bins=bin_limits,
                                                 labels=False)
                     bin_averages = [None] * num_bins
@@ -120,7 +120,7 @@ class GraphNumeric(sweetviz.graph.Graph):
             elif to_process.predetermined_type_target == FeatureType.TYPE_BOOL:
                 # TARGET: IS BOOL
                 source_true = to_process.source[to_process.source_target == 1]
-                source_bins_series = pd.cut(source_true,
+                source_bins_series = pd.qcut(source_true,
                                             bins=bin_limits,
                                             labels=False)
                 total_counts_source = bin_counts[0] if to_process.compare is not None else bin_counts
@@ -151,7 +151,7 @@ class GraphNumeric(sweetviz.graph.Graph):
 
                     # Create a series where each item indicates its bin
                     # TODO: possible 1-off bug in counts from cut in lower bin
-                    compare_bins_series = pd.cut(compare_true,
+                    compare_bins_series = pd.qcut(compare_true,
                                                 bins=bin_limits,
                                                 labels=False)
                     total_counts_compare = bin_counts[1] * len(cleaned_compare)
